@@ -30,7 +30,16 @@
  *
  */
 function getFizzBuzz(num) {
-    throw new Error('Not implemented');
+    switch (true) {
+        case num % 3 === 0 && num % 5 === 0:
+            return 'FizzBuzz';
+        case num % 3 === 0:
+            return 'Fizz'
+        case num % 5 === 0:
+            return 'Buzz'
+        default:
+            return num;
+    }
 }
 
 
@@ -46,7 +55,11 @@ function getFizzBuzz(num) {
  *   10 => 3628800
  */
 function getFactorial(n) {
-    throw new Error('Not implemented');
+    let res = 1;
+    for (let i = 1; i <= n; i++) {
+        res *= i;
+    }
+    return res;
 }
 
 
@@ -63,7 +76,11 @@ function getFactorial(n) {
  *   -1,1  =>  0  ( = -1 + 0 + 1 )
  */
 function getSumBetweenNumbers(n1, n2) {
-    throw new Error('Not implemented');
+    let sum = 0;
+    for (let i = n1; i <= n2; i++){
+        sum+= i;
+    }
+    return sum;
 }
 
 
@@ -82,13 +99,20 @@ function getSumBetweenNumbers(n1, n2) {
  *   10,10,10 =>  true
  */
 function isTriangle(a,b,c) {
-    throw new Error('Not implemented');
+    if (a + b <= c){
+        return false;
+    }  else if (b + c <= a){
+        return false;
+    } else if (c + a <= b){
+        return false;
+    } else {
+        return true;
+    }
 }
 
 
 /**
- * Returns true, if two specified axis-aligned rectangles overlap, otherwise false.
- * Each rectangle representing by object 
+
  *  {
  *     top: 5,
  *     left: 5,
@@ -119,7 +143,9 @@ function isTriangle(a,b,c) {
  *  
  */
 function doRectanglesOverlap(rect1, rect2) {
-    throw new Error('Not implemented');
+    let dot = {top: rect1.top + rect1.height, left: rect1.left + rect1.width};
+    if (rect2.top > dot.top || rect2.left > dot.left) return false;
+    return true;
 }
 
 
@@ -150,7 +176,7 @@ function doRectanglesOverlap(rect1, rect2) {
  *   
  */
 function isInsideCircle(circle, point) {
-    throw new Error('Not implemented');
+    return (Math.pow((point.y - circle.center.y), 2) + Math.pow((point.x - circle.center.x), 2)) < Math.pow(circle.radius,2);
 }
 
 
@@ -166,7 +192,16 @@ function isInsideCircle(circle, point) {
  *   'entente' => null
  */
 function findFirstSingleChar(str) {
-    throw new Error('Not implemented');
+    start:for (let i = 0; i < str.length; i++){
+        for (let j = 0; j < str.length; j++){
+            if (i === j) continue;
+            if (str[i] === str[j]){
+                continue start;
+            }
+        }
+        return str[i];
+    }
+    return null;
 }
 
 
@@ -192,7 +227,21 @@ function findFirstSingleChar(str) {
  *
  */
 function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
-    throw new Error('Not implemented');
+    let s = '';
+    if (isStartIncluded){
+        s += '['
+    } else {
+        s += '('
+    }
+    s += Math.min(a, b);
+    s += ', ';
+    s += Math.max(a, b);
+    if (isEndIncluded){
+        s += ']'
+    } else {
+        s += ')'
+    }
+    return s;
 }
 
 
@@ -209,7 +258,11 @@ function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
  * 'noon' => 'noon'
  */
 function reverseString(str) {
-    throw new Error('Not implemented');
+    let res = ''
+    for (let i = str.length - 1;i >= 0;i--) {
+        res += str[i];
+    }
+    return res;
 }
 
 
@@ -226,7 +279,7 @@ function reverseString(str) {
  *   34143 => 34143
  */
 function reverseInteger(num) {
-    throw new Error('Not implemented');
+    return Number((num + "").split('').reverse().join(''))
 }
 
 
@@ -250,8 +303,24 @@ function reverseInteger(num) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(ccn) {
-    throw new Error('Not implemented');
+function isCreditCardNumber(value) {
+    value += "";
+    var nCheck = 0, nDigit = 0, bEven = false;
+    value = value.replace(/\D/g, "");
+
+    for (var n = value.length - 1; n >= 0; n--) {
+        var cDigit = value.charAt(n),
+         nDigit = parseInt(cDigit, 10);
+
+        if (bEven) {
+            if ((nDigit *= 2) > 9) nDigit -= 9;
+        }
+
+        nCheck += nDigit;
+        bEven = !bEven;
+    }
+
+    return (nCheck % 10) == 0;
 }
 
 
@@ -270,7 +339,18 @@ function isCreditCardNumber(ccn) {
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
 function getDigitalRoot(num) {
-    throw new Error('Not implemented');
+    num += "";
+    let val = 0;
+    for (let i = 0; i < num.length; i++){
+        val += Number(num[i])
+    }
+    val += '';
+    let res = 0;
+    for (let i = 0; i < val.length; i++){
+       res += Number(val[i])
+    }
+
+    return res
 }
 
 
@@ -296,7 +376,47 @@ function getDigitalRoot(num) {
  *   '{[(<{[]}>)]}' = true 
  */
 function isBracketsBalanced(str) {
-    throw new Error('Not implemented');
+    const bracketsConfig = [['[',']'], ['(',')'], ['{','}'],['<','>']];
+    let d = [];
+    let open = [];
+    let close = [];
+    let exept = [];
+    for (let i = 0; i < bracketsConfig.length; i++) {
+        if (bracketsConfig[i][0] !== bracketsConfig[i][1]) {
+            open.push(bracketsConfig[i][0]);
+            close.push(bracketsConfig[i][1]);
+        }else{
+            exept.push(bracketsConfig[i][0]);
+        }
+    }
+    for (let i = 0; i < str.length; i++) {
+        if (open.indexOf(str[i]) !== -1) {
+            d.push(str[i]);
+        }else if(exept.indexOf(str[i]) !== -1){
+            if (d.indexOf(str[i]) !== -1) {
+                if (d[d.length-1] === str[i]) {
+                    d.pop();
+                }else{
+                    return false;
+                }
+            }else{
+                d.push(str[i]);
+            }
+        } else{
+            let s = close.indexOf(str[i]);
+            if (open[s] === d[d.length - 1]) {
+                d.pop();
+            } else{
+                return false;
+            }
+        }
+    }
+    if (d.length === 0) {
+        return true;
+    } else{
+        return false;
+    }
+
 }
 
 
@@ -332,8 +452,19 @@ function isBracketsBalanced(str) {
  *
  */
 function timespanToHumanString(startDate, endDate) {
+    // let diff = (endDate.getTime() - startDate.getTime())/1000;
+    // if (diff >= 0 && diff <= 45){
+    //     return 'a few seconds ago'
+    // } else if (diff > 45 && diff <= 90){
+    //     return 'a minute ago'
+    // } else if (diff > 90 && diff <= 2,7e+6){
+    //     return '2 minutes ago ... 45 minutes ago'
+    // } else if (diff > 2,7e+6 && diff <= 2,7e+6){
+    //     return '2 minutes ago ... 45 minutes ago'
+    // }
     throw new Error('Not implemented');
 }
+
 
 
 /**
