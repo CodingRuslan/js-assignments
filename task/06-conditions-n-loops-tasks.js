@@ -487,7 +487,7 @@ function timespanToHumanString(startDate, endDate) {
  *    365, 10 => '365'
  */
 function toNaryString(num, n) {
-    throw new Error('Not implemented');
+    return num.toString(n);
 }
 
 
@@ -526,8 +526,19 @@ function getCommonDirectoryPath(pathes) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(m1, m2) {
-    throw new Error('Not implemented');
+function getMatrixProduct(A, B) {
+    let rowsA = A.length, colsA = A[0].length,
+     rowsB = B.length, colsB = B[0].length,
+     C = [];
+    for (let i = 0; i < rowsA; i++) C[ i ] = [];
+    for (let k = 0; k < colsB; k++)
+    { for (let i = 0; i < rowsA; i++)
+    { let t = 0;
+        for (let j = 0; j < rowsB; j++) t += A[ i ][j]*B[j][k];
+        C[ i ][k] = t;
+    }
+    }
+    return C;
 }
 
 
@@ -561,8 +572,30 @@ function getMatrixProduct(m1, m2) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(position) {
-    throw new Error('Not implemented');
+function evaluateTicTacToePosition(arr) {
+    if (arr[0][0] === 'X' && arr[0][1] === 'X' && arr[0][2] === 'X') return 'X';//проверка столбцов
+    if (arr[0][0] === '0' && arr[0][1] === '0' && arr[0][2] === '0') return '0';
+
+    if (arr[1][0] === 'X' && arr[1][1] === 'X' && arr[1][2] === 'X') return 'X';
+    if (arr[1][0] === '0' && arr[1][1] === '0' && arr[1][2] === '0') return '0';
+
+    if (arr[2][0] === 'X' && arr[2][1] === 'X' && arr[2][2] === 'X') return 'X';
+    if (arr[2][0] === '0' && arr[2][1] === '0' && arr[2][2] === '0') return '0';
+
+    if (arr[0][0] === 'X' && arr[1][0] === 'X' && arr[2][0] === 'X') return 'X';//проверка строк
+    if (arr[0][0] === '0' && arr[1][0] === '0' && arr[2][0] === '0') return '0';
+
+    if (arr[0][1] === 'X' && arr[1][1] === 'X' && arr[2][1] === 'X') return 'X';
+    if (arr[0][1] === '0' && arr[1][1] === '0' && arr[2][1] === '0') return '0';
+
+    if (arr[0][2] === 'X' && arr[1][2] === 'X' && arr[2][2] === 'X') return 'X';
+    if (arr[0][2] === '0' && arr[1][2] === '0' && arr[2][2] === '0') return '0';
+
+    if (arr[0][0] === 'X' && arr[1][1] === 'X' && arr[2][2] === 'X') return 'X'; // диоганаль
+    if (arr[0][0] === '0' && arr[1][1] === '0' && arr[2][2] === '0') return '0';
+
+    if (arr[0][2] === 'X' && arr[1][1] === 'X' && arr[2][0] === 'X') return 'X';
+    if (arr[0][2] === '0' && arr[1][1] === '0' && arr[2][0] === '0') return '0';
 }
 
 

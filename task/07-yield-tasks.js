@@ -32,8 +32,23 @@
  * @return {Iterable.<string>}
  *
  */
-function* get99BottlesOfBeer() {
-    throw new Error('Not implemented');
+function get99BottlesOfBeer() {
+    let res = [];
+    for (let i = 99; i > 1; i--){
+        res.push(`${i} bottles of beer on the wall, ${i} bottles of beer.`);
+        if (i === 2){
+            res.push('Take one down and pass it around, 1 bottle of beer on the wall.')
+        } else {
+            res.push(`Take one down and pass it around, ${i-1} bottles of beer on the wall.`)
+        }
+
+    }
+    res.push('1 bottle of beer on the wall, 1 bottle of beer.',
+     'Take one down and pass it around, no more bottles of beer on the wall.',
+     'No more bottles of beer on the wall, no more bottles of beer.',
+     'Go to the store and buy some more, 99 bottles of beer on the wall.'
+     );
+    return res;
 }
 
 
